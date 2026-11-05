@@ -1,0 +1,109 @@
+@startuml DiagramaClases(versionCompleta)
+skinparam classAttributeIconSize 0
+
+' --- 1. JERARQUÍA DE REPORTES (Herencia) ---
+abstract class Reporte {
+    # id: Long
+    # texto: String
+    # fechaCreacion: LocalDateTime
+    + {abstract} validar(): boolean
+}
+
+class ReporteRuido {
+    - nivelDecibeliosEstimado: String 
+    - enHorarioNocturno: boolean
+    + validar(): boolean
+}
+
+class ReporteBasura {
+    - tipoResiduo: String
+    - contenedorDesbordado: boolean
+    + validar(): boolean
+}
+
+class ReporteMobiliarioRoto {
+    - tipoElemento: String 
+    - peligroInminente: boolean
+    + validar(): boolean
+}
+
+Reporte <|-- ReporteRuido
+Reporte <|-- ReporteBasura
+Reporte <|-- ReporteMobiliarioRoto
+
+' --- 2. COMPOSICIÓN Y TIPOS AUXILIARES ---
+class Ubicacion {
+    - latitud: Double
+    - longitud: Double
+    - direccionAproximada: String
+}
+
+enum EstadoReporte {
+    PENDIENTE
+    EN_REVISION
+    RESUELTO
+}
+
+class Etiqueta {
+    - id: Long
+    - nombre: String
+}
+
+Reporte *-- "1" Ubicacion : contiene >
+Reporte *-- "1" EstadoReporte : se encuentra en >
+Reporte *-- "0..*" Etiqueta : clasificado con >
+
+' --- 3. SISTEMA ANTI-ABUSO (Patrón Strategy) ---
+class SolicitudReporte {
+    - ipHash: String
+    - texto: String
+    - categoria: String
+    - latitud: Double
+    - longitud: Double
+    - campoTrampa: String
+}
+
+class ResultadoRegla {
+    - esValido: boolean
+    - motivo: String
+    - segundosEspera: int
+    + esValido(): boolean
+    + getMotivo(): String
+    + getSegundosEspera(): int
+}
+
+interface ReglaAntiAbuso {
+    + evaluar(solicitud: SolicitudReporte): ResultadoRegla
+}
+
+class CooldownRegla {
+    + evaluar(solicitud: SolicitudReporte): ResultadoRegla
+}
+
+class CuotaDiariaRegla {
+    + evaluar(solicitud: SolicitudReporte): ResultadoRegla
+}
+
+class DuplicadoRegla {
+    + evaluar(solicitud: SolicitudReporte): ResultadoRegla
+}
+
+class HoneypotRegla {
+    + evaluar(solicitud: SolicitudReporte): ResultadoRegla
+}
+
+ReglaAntiAbuso <|.. CooldownRegla
+ReglaAntiAbuso <|.. CuotaDiariaRegla
+ReglaAntiAbuso <|.. DuplicadoRegla
+ReglaAntiAbuso <|.. HoneypotRegla
+
+class ValidadorAntiAbuso {
+    - reglas: List<ReglaAntiAbuso>
+    + validarTodo(solicitud: SolicitudReporte): ResultadoRegla
+}
+
+ValidadorAntiAbuso o-- "1..*" ReglaAntiAbuso : ejecuta en cadena >
+ValidadorAntiAbuso ..> SolicitudReporte : procesa >
+ValidadorAntiAbuso ..> ResultadoRegla : produce >
+
+@enduml
