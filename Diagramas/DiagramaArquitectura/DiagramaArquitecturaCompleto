@@ -1,0 +1,40 @@
+@startuml DiagramaArquitectura
+!theme plain
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam nodesep 55
+skinparam ranksep 65
+
+title Arquitectura del Sistema — GestionIncidencias
+
+actor "Usuario anónimo\n(Envía reportes y\nmira el dashboard)" as Usuario
+
+node "Entorno Docker Compose (Red Interna)" {
+
+    component "**Nginx**\nProxy inverso, pasa\nla IP real del usuario" as Nginx #F8F9F9
+
+    component "**Streamlit**\nFormulario, mapa,\ngráficas y alertas" as Streamlit #F8F9F9
+
+    component "**API Java**\nValida, limpia, filtra\nabuso y sirve datos" as Java #D6EAF8
+
+    database "**PostgreSQL**\n• reportes\n• intentos_envio\n• analisis_resultados" as DB #F5EEF8
+
+    component "**Python**\nZonas (DBSCAN), tendencias,\nanomalías e IA ligera" as Python #FEF9E7
+}
+
+cloud "API LLM Externa\n(Opcional: MODO_IA=llm)" as LLM
+
+' Conexiones principales
+Usuario -right-> Nginx : HTTP
+Nginx -right-> Streamlit : X-Forwarded-For
+Streamlit <-down-> Java : REST / JSON\n(solo vía API)
+Java <-left-> DB : rol: api_java
+Python <-right-> DB : rol: analisis_python
+Python ..> LLM : HTTPS\n(fallback a reglas)
+
+note bottom of Java
+  Única puerta de entrada a la BD desde la interfaz.
+  Cada servicio usa su propia cuenta de PostgreSQL.
+end note
+
+@enduml
