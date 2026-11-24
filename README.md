@@ -7,7 +7,6 @@ Tecnologías principales
 - Análisis:Python para procesamiento de datos y detección de tendencias.
 - Interfaz:Streamlit.
 - Despliegue:Docker Compose (entorno contenedorizado).
-# 
 
 > **Estado:** En desarrollo — Fase inicial (estructura e infraestructura)
 
@@ -21,5 +20,5 @@ Proyecto de portafolio (90 h — IFCT0609) centrado en diseño orientado a objet
 | **`nginx`** | Nginx | *Reverse proxy* de entrada; añade `X-Forwarded-For` con la IP real. |
 | **`dashboard`** | Python (Streamlit) | Formulario, mapa y métricas. Solo se comunica con la API de Java. |
 | **`backend-java`** | Java (Spring Boot) | Puerta única de datos: validación OO, anti-abuso (HTTP 429) y lectura de resultados. |
-| **`db`** | PostgreSQL + PostGIS | Persistencia de reportes, intentos de envío (hash IP) y resultados analíticos. |
+| **`db`** | PostgreSQL | Persistencia de reportes, intentos de envío (hash IP) y resultados analíticos. |
 | **`analisis-python`** | Python | Proceso periódico: clustering geográfico, anomalías e IA ligera. |

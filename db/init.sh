@@ -10,10 +10,12 @@ psql -v ON_ERROR_STOP=1 \
 -- 1. CREACIÓN DE TABLAS
 CREATE TABLE IF NOT EXISTS reportes (
     id BIGSERIAL PRIMARY KEY,
-    categoria VARCHAR(50) NOT NULL,
+    categoria VARCHAR(50) NOT NULL CHECK (categoria IN ('RUIDO', 'BASURA', 'MOBILIARIO_ROTO')),
     descripcion VARCHAR(280) NOT NULL,
     latitud DOUBLE PRECISION NOT NULL,
     longitud DOUBLE PRECISION NOT NULL,
+    direccion_aproximada VARCHAR(200),
+    etiquetas TEXT[],
     estado VARCHAR(30) NOT NULL DEFAULT 'PENDIENTE' CHECK (estado IN ('PENDIENTE', 'EN_REVISION', 'RESUELTO')),
     detalles_json JSONB,
     fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
