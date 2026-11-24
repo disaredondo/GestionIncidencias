@@ -5,7 +5,7 @@ skinparam shadowing false
 skinparam nodesep 55
 skinparam ranksep 65
 
-title Arquitectura del Sistema — GestionIncidencias
+title Arquitectura del Sistema — Nuisance
 
 actor "Usuario anónimo\n(Envía reportes y\nmira el dashboard)" as Usuario
 
