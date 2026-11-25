@@ -1,4 +1,4 @@
-# Nuisance - — Sistema de detección de zonas problemáticas a partir de reportes ciudadanos
+# Nuisance — Sistema de detección de zonas problemáticas a partir de reportes ciudadanos
 Sistema modular de recepción y análisis de incidencias urbanas con Java, PostgreSQL y Python 
 
 Tecnologías principales
