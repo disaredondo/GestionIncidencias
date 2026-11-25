@@ -35,6 +35,12 @@ CREATE TABLE IF NOT EXISTS analisis_resultados (
     fecha_generacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE INDEX IF NOT EXISTS idx_reportes_ubicacion
+    ON reportes (latitud, longitud);
+
+CREATE INDEX IF NOT EXISTS idx_reportes_categoria_fecha
+    ON reportes (categoria, fecha_creacion);
+
 -- 2. USUARIOS Y PERMISOS (MÍNIMO PRIVILEGIO E INMUTABILIDAD)
 CREATE USER api_java WITH PASSWORD :'java_pass';
 CREATE USER analisis_python WITH PASSWORD :'python_pass';
@@ -51,5 +57,5 @@ GRANT USAGE, SELECT ON SEQUENCE reportes_id_seq, intentos_envio_id_seq TO api_ja
 GRANT SELECT ON TABLE reportes TO analisis_python;
 GRANT SELECT, INSERT ON TABLE analisis_resultados TO analisis_python;
 GRANT USAGE, SELECT ON SEQUENCE analisis_resultados_id_seq TO analisis_python;
-
+REVOKE ALL ON TABLE intentos_envio FROM analisis_python; 
 EOSQL
