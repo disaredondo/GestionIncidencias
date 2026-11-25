@@ -3,7 +3,7 @@ Sistema modular de recepción y análisis de incidencias urbanas con Java, Postg
 
 Tecnologías principales
 - Backend:Java con diseño orientado a objetos y patrón Strategy.
-- Base de datos:PostgreSQL con aislamiento de usuarios, mínimo privilegio e inmutabilidad de datos
+- Base de datos:PostgreSQL con aislamiento de usuarios, mínimo privilegio e inmutabilidad de datos nivel de aplicación (ningún servicio de aplicación puede hacer UPDATE/DELETE sobre los datos)
 - Análisis:Python para procesamiento de datos y detección de tendencias.
 - Interfaz:Streamlit.
 - Despliegue:Docker Compose (entorno contenedorizado).
