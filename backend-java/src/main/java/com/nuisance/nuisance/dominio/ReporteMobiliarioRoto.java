@@ -1,4 +1,5 @@
 package com.nuisance.nuisance.dominio;
+import java.util.Map;
 
 public class ReporteMobiliarioRoto extends ReporteDominio {
     private String tipoElemento;
@@ -18,5 +19,13 @@ public class ReporteMobiliarioRoto extends ReporteDominio {
         if (this.tipoElemento == null || this.tipoElemento.isBlank()) {
             throw new IllegalArgumentException("El tipo de elemento (banco, farola...) es obligatorio");
         }
+    }
+
+ @Override
+    public Map<String, Object> detalles() {
+        return Map.of(
+            "tipoElemento", tipoElemento != null ? tipoElemento : "", 
+            "peligroInminente", peligroInminente
+        );
     }
 }

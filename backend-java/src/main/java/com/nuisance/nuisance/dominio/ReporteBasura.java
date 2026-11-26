@@ -1,5 +1,7 @@
 package com.nuisance.nuisance.dominio;
 
+import java.util.Map;
+
 public class ReporteBasura extends ReporteDominio {
     private String tipoResiduo;
     private boolean contenedorDesbordado;
@@ -12,11 +14,17 @@ public class ReporteBasura extends ReporteDominio {
 
     @Override
     public void validar() {
-        validarComun(); // REUTILIZO EL CODIGO DEL PADRE:0
-        
-        // Regla específica de la basura
+        validarComun(); 
         if (this.tipoResiduo == null || this.tipoResiduo.isBlank()) {
             throw new IllegalArgumentException("El tipo de residuo es obligatorio para reportes de basura");
         }
+    }
+
+    @Override
+    public Map<String, Object> detalles() {
+        return Map.of(
+            "tipoResiduo", tipoResiduo != null ? tipoResiduo : "", 
+            "contenedorDesbordado", contenedorDesbordado
+        );
     }
 }

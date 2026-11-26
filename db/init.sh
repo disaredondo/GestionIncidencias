@@ -40,6 +40,8 @@ CREATE INDEX IF NOT EXISTS idx_reportes_ubicacion
 
 CREATE INDEX IF NOT EXISTS idx_reportes_categoria_fecha
     ON reportes (categoria, fecha_creacion);
+    
+CREATE INDEX IF NOT EXISTS idx_intentos_ip_fecha ON intentos_envio (ip_hash, fecha);
 
 -- 2. USUARIOS Y PERMISOS (MÍNIMO PRIVILEGIO E INMUTABILIDAD)
 CREATE USER api_java WITH PASSWORD :'java_pass';

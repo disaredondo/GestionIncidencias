@@ -9,18 +9,32 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       JAVA_DB_PASSWORD: ${JAVA_DB_PASSWORD}
       PYTHON_DB_PASSWORD: ${PYTHON_DB_PASSWORD}
-    ports:
-      - "127.0.0.1:5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./db/init.sh:/docker-entrypoint-initdb.d/init.sh:ro
-    networks:
-      - backnet
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d ${POSTGRES_DB}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - backnet
+
+  backend-java:
+    build: ./backend-java
+    container_name: gestion_incidencias_java
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      - DB_URL=jdbc:postgresql://db:5432/${POSTGRES_DB} 
+      - DB_USER=api_java
+      - JAVA_DB_PASSWORD=${JAVA_DB_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backnet
 
 volumes:
   postgres_data:
