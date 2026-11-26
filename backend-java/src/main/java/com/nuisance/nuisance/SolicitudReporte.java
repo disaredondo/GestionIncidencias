@@ -9,8 +9,10 @@ public class SolicitudReporte {
     private Double latitud;
     private Double longitud;
     
-    // Campos específicos de los tipos (los usaremos mañana)
+    // Campos específicos que DEBEN estar aquí
     private Boolean enHorarioNocturno;
     private String tipoResiduo;
+    private Boolean contenedorDesbordado;
     private String tipoElemento;
+    private Boolean peligroInminente;
 }

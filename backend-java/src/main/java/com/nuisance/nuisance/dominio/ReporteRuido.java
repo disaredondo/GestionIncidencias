@@ -10,11 +10,8 @@ public class ReporteRuido extends ReporteDominio {
 
     @Override
     public void validar() {
-        if (this.descripcion == null || this.descripcion.isBlank()) {
-            throw new IllegalArgumentException("La descripción no puede estar vacía");
-        }
-        if (this.descripcion.length() > 280) {
-            throw new IllegalArgumentException("La descripción no puede superar los 280 caracteres");
-        }
+        validarComun(); //REUTILIZAMOS EL COODIGO DEL PADRE
+        // maybe si luego quiero agregar alguna validacion especifica aca la pongo ;) estara en mejoras a futuro
+
     }
 }
