@@ -9,6 +9,10 @@ public class ReporteRuido extends ReporteDominio {
         super(descripcion, ubicacion);
         this.enHorarioNocturno = enHorarioNocturno;
     }
+    @Override
+    public String categoria() {
+    return "RUIDO";
+    }
 
     @Override
     public void validar() {

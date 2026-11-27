@@ -11,7 +11,11 @@ public class ReporteBasura extends ReporteDominio {
         this.tipoResiduo = tipoResiduo;
         this.contenedorDesbordado = contenedorDesbordado;
     }
-
+    
+    @Override
+    public String categoria() {
+        return "BASURA";
+    }
     @Override
     public void validar() {
         validarComun(); 

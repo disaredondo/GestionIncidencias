@@ -12,6 +12,11 @@ public class ReporteMobiliarioRoto extends ReporteDominio {
     }
 
     @Override
+    public String categoria() {
+        return "MOBILIARIO_ROTO";
+    }
+
+    @Override
     public void validar() {
         validarComun(); // REUTILIZAMOS EL CODIGO DEL PADRE
         
