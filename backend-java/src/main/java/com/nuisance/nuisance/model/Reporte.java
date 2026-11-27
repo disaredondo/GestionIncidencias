@@ -1,4 +1,4 @@
-package com.nuisance.nuisance;
+package com.nuisance.nuisance.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,6 +1,10 @@
-package com.nuisance.nuisance;
+package com.nuisance.nuisance.service;
 
 import com.nuisance.nuisance.dominio.*;
+import com.nuisance.nuisance.dto.SolicitudReporte;
+import com.nuisance.nuisance.model.Reporte;
+import com.nuisance.nuisance.repository.ReporteRepository;
+
 import org.springframework.stereotype.Service;
 
 @Service

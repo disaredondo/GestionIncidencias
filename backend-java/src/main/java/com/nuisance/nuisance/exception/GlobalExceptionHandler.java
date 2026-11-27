@@ -1,4 +1,4 @@
-package com.nuisance.nuisance;
+package com.nuisance.nuisance.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

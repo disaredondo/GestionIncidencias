@@ -1,4 +1,4 @@
-package com.nuisance.nuisance;
+package com.nuisance.nuisance.dto;
 
 import lombok.Data;
 

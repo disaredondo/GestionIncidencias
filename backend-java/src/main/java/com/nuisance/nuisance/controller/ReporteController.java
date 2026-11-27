@@ -1,5 +1,9 @@
-package com.nuisance.nuisance;
+package com.nuisance.nuisance.controller;
 import org.springframework.web.bind.annotation.*;
+
+import com.nuisance.nuisance.dto.SolicitudReporte;
+import com.nuisance.nuisance.model.Reporte;
+import com.nuisance.nuisance.service.ReporteService;
 
 @RestController
 @RequestMapping("/reportes")
