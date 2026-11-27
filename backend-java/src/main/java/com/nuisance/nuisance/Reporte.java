@@ -7,6 +7,9 @@ import org.hibernate.type.SqlTypes;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import com.nuisance.nuisance.dominio.Ubicacion;
+import com.nuisance.nuisance.dominio.EstadoReporte;
+
 @Data
 @Entity
 @Table(name = "reportes")
@@ -18,8 +21,15 @@ public class Reporte {
 
     private String categoria;
     private String descripcion;
-    private Double latitud;
-    private Double longitud;
+    
+    //aca agregamos
+    //  las composiciones de ubicacion y de estado  del reporte
+    @Embedded
+    private Ubicacion ubicacion; 
+    
+    @Enumerated(EnumType.STRING)
+    private EstadoReporte estado;
+
 
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion = LocalDateTime.now();

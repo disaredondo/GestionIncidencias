@@ -5,8 +5,8 @@ public class ReporteMobiliarioRoto extends ReporteDominio {
     private String tipoElemento;
     private boolean peligroInminente;
 
-    public ReporteMobiliarioRoto(String descripcion, Double latitud, Double longitud, String tipoElemento, boolean peligroInminente) {
-        super(descripcion, latitud, longitud);
+    public ReporteMobiliarioRoto(String descripcion, Ubicacion ubicacion, String tipoElemento, boolean peligroInminente) {
+        super(descripcion, ubicacion);
         this.tipoElemento = tipoElemento;
         this.peligroInminente = peligroInminente;
     }

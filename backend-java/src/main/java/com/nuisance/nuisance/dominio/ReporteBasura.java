@@ -6,8 +6,8 @@ public class ReporteBasura extends ReporteDominio {
     private String tipoResiduo;
     private boolean contenedorDesbordado;
 
-    public ReporteBasura(String descripcion, Double latitud, Double longitud, String tipoResiduo, boolean contenedorDesbordado) {
-        super(descripcion, latitud, longitud);
+    public ReporteBasura(String descripcion, Ubicacion ubicacion, String tipoResiduo, boolean contenedorDesbordado) {
+        super(descripcion, ubicacion);
         this.tipoResiduo = tipoResiduo;
         this.contenedorDesbordado = contenedorDesbordado;
     }

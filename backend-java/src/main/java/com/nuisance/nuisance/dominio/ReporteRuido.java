@@ -5,8 +5,8 @@ import java.util.Map;
 public class ReporteRuido extends ReporteDominio {
     private boolean enHorarioNocturno;
 
-    public ReporteRuido(String descripcion, Double latitud, Double longitud, boolean enHorarioNocturno) {
-        super(descripcion, latitud, longitud);
+    public ReporteRuido(String descripcion, Ubicacion ubicacion, boolean enHorarioNocturno) {
+        super(descripcion, ubicacion);
         this.enHorarioNocturno = enHorarioNocturno;
     }
 
