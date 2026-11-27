@@ -15,4 +15,5 @@ public class SolicitudReporte {
     private Boolean contenedorDesbordado;
     private String tipoElemento;
     private Boolean peligroInminente;
+    private String campoTrampa;
 }

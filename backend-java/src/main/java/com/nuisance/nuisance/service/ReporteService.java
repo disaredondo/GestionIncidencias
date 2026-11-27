@@ -1,25 +1,55 @@
 package com.nuisance.nuisance.service;
 
+import com.nuisance.nuisance.antiabuso.ReglaAntiAbuso;
 import com.nuisance.nuisance.dominio.*;
 import com.nuisance.nuisance.dto.SolicitudReporte;
-import com.nuisance.nuisance.model.Reporte;
-import com.nuisance.nuisance.repository.ReporteRepository;
-
+import com.nuisance.nuisance.model.IntentoEnvio;
+import com.nuisance.nuisance.model.Reporte;                                             
+import com.nuisance.nuisance.repository.IntentoEnvioRepository;
+import com.nuisance.nuisance.repository.ReporteRepository;                      // parte 1 mñm termino D:
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class ReporteService {
 
     private final ReporteRepository repository;
+    private final IntentoEnvioRepository intentoRepository;
+    private final List<ReglaAntiAbuso> reglas;
 
-    public ReporteService(ReporteRepository repository) {
+    public ReporteService(
+            ReporteRepository repository,
+            IntentoEnvioRepository intentoRepository,
+            List<ReglaAntiAbuso> reglas) {
         this.repository = repository;
+        this.intentoRepository = intentoRepository;
+        this.reglas = reglas;
     }
 
-    public Reporte crearReporte(SolicitudReporte solicitud) {
-        if (solicitud.getCategoria() == null || solicitud.getCategoria().isBlank()) {
-            throw new IllegalArgumentException("La categoría es obligatoria");
+public Reporte crearReporte(SolicitudReporte solicitud, String ipHash) {
+    
+    if (solicitud.getCategoria() == null || solicitud.getCategoria().isBlank()) {
+        throw new IllegalArgumentException("La categoria es obligatoria ");
         }
+
+    //INICIO DE TRY Y CATCH (ES EL PATRON STRATEGY >:)
+        try {
+            for (ReglaAntiAbuso regla : reglas) {
+                regla.validar(solicitud,ipHash);
+            }
+            IntentoEnvio intentobien = new IntentoEnvio();
+            intentobien.setIpHash(ipHash);
+            intentobien.setResultado("PERMITIDO");
+            intentoRepository.save(intentobien);
+        } catch (RuntimeException ex) {
+            IntentoEnvio intentomal = new IntentoEnvio();
+            intentomal.setIpHash(ipHash);
+            intentomal.setResultado("RECHAZADO");
+            intentoRepository.save(intentomal);
+            throw ex;
+        }
+
+        //bye bye patron
 
         Ubicacion ubicacion = new Ubicacion(
             solicitud.getLatitud(),
@@ -44,9 +74,10 @@ public class ReporteService {
                 solicitud.getTipoElemento(),
                 solicitud.getPeligroInminente() != null ? solicitud.getPeligroInminente() : false
             );
-            default -> throw new IllegalArgumentException("Categoría no válida: " + solicitud.getCategoria());
+            default -> throw new IllegalArgumentException("Categoria no valida, ingrese una correcta: " + solicitud.getCategoria());
         };
 
+        //NO TOQUES ESTA PARTEEEE
         reporteDominio.validar();
 
         Reporte entidad = new Reporte();
